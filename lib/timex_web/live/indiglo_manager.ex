@@ -7,7 +7,6 @@ defmodule TimexWeb.IndigloManager do
     {:ok, %{ui_pid: ui, st: IndigloOff}}
   end
   def handle_info(:start_alarm, %{ui_pid: ui, st: IndigloOff} = state) do
-    IO.inspect("Chimpacini bananini ")
     Process.send_after(self(), :AlarmOn_AlarmOff, 1000)
     GenServer.cast(ui, :set_indiglo)
     {:noreply, %{state | st: AlarmOn}}
