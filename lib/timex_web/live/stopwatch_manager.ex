@@ -54,7 +54,7 @@ defmodule TimexWeb.StopwatchManager do
     {:noreply, %{state | st2: Counting, count: count, timer: timer}}
   end
 
-  def handle_info(event, state) do
+  def handle_info(_event, state) do
     {:noreply, state}
   end
 end
