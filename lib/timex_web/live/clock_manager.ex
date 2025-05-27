@@ -163,10 +163,35 @@ defmodule TimexWeb.ClockManager do
     {:noreply, %{state | st: Working, alarm: new_alarm, edit_alarm: nil, selection: nil, show: false, count: 0}}
   end
 
-  # Handle other calls
-  def handle_info(msg, state) do
-    IO.inspect(msg)
+  # Handle alarm start
+  def handle_info(:start_alarm, state) do
+    IO.inspect("ALARMA ACTIVADA")
     {:noreply, state}
+  end
+
+  # Top-left button handle
+  def handle_info(:"top-left", state) do
+    {:noreply, state}
+  end
+
+  # Handle bottom-right
+  def handle_info(:"bottom-right", state) do
+    {:noreply, state}
+  end
+
+  # Handle top-right
+  def handle_info(:"top-right", state) do
+    {:noreply, state}
+  end
+
+  # Handle transition state
+  def handle_info(:working_working, %{st: st} = state) when st in [Editing, EditingAlarm] do
+    {:noreply, state}
+  end
+
+  # Handle other calls
+  def handle_info(unexpected, _state) do
+    raise "Mensaje inesperado en manager: #{inspect(unexpected)}"
   end
 
   # Function to increment time
@@ -180,6 +205,7 @@ defmodule TimexWeb.ClockManager do
     %{time | second: rem(time.second + 1, 60)}
   end
 
+  # Refactoring numbers in editing mode
   defp pad(n) when n < 10, do: "0#{n}"
   defp pad(n), do: "#{n}"
 end
